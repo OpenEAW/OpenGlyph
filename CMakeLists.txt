@@ -10,6 +10,7 @@ find_package(rapidxml REQUIRED)
 
 add_library(${PROJECT_NAME}
     src/assets/asset_loader.cpp
+    src/game/scene_renderer.cpp
     src/io/chunk_reader.cpp
     src/renderer/io/material.cpp
     src/renderer/io/model.cpp
