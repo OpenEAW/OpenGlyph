@@ -8,6 +8,7 @@ project(OpenGlyph CXX)
 find_package(khepri REQUIRED)
 
 add_library(${PROJECT_NAME}
+    src/assets/asset_loader.cpp
     src/io/chunk_reader.cpp
     src/renderer/io/model.cpp
     src/version.cpp
