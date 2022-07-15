@@ -14,6 +14,7 @@ add_library(${PROJECT_NAME}
     src/renderer/io/material.cpp
     src/renderer/io/model.cpp
     src/renderer/material_store.cpp
+    src/renderer/model_creator.cpp
     src/parser/parsers.cpp
     src/parser/xml_parser.cpp
     src/version.cpp
