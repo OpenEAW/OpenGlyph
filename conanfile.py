@@ -38,6 +38,7 @@ class OpenGlyphConan(ConanFile):
 
     requires = [
         ("khepri/[<1.0]"),
+        ("rapidxml/1.13"),
     ]
 
     exports_sources = "CMakeLists.txt", "include/*", "src/*"
