@@ -11,6 +11,7 @@ find_package(rapidxml REQUIRED)
 add_library(${PROJECT_NAME}
     src/assets/asset_loader.cpp
     src/io/chunk_reader.cpp
+    src/renderer/io/material.cpp
     src/renderer/io/model.cpp
     src/parser/parsers.cpp
     src/parser/xml_parser.cpp
