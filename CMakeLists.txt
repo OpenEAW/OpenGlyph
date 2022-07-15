@@ -8,6 +8,7 @@ project(OpenGlyph CXX)
 find_package(khepri REQUIRED)
 
 add_library(${PROJECT_NAME}
+    src/io/chunk_reader.cpp
     src/version.cpp
 )
 
