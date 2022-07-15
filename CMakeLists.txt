@@ -13,6 +13,7 @@ add_library(${PROJECT_NAME}
     src/io/chunk_reader.cpp
     src/renderer/io/material.cpp
     src/renderer/io/model.cpp
+    src/renderer/material_store.cpp
     src/parser/parsers.cpp
     src/parser/xml_parser.cpp
     src/version.cpp
