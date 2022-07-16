@@ -49,6 +49,11 @@ public:
      */
     std::unique_ptr<khepri::io::Stream> open_shader(std::string_view name);
 
+    /**
+     * Opens a map asset
+     */
+    std::unique_ptr<khepri::io::Stream> open_map(std::string_view name);
+
 private:
     std::unique_ptr<khepri::io::Stream> open_file(const std::filesystem::path&      base_path,
                                                   std::string_view                  name,

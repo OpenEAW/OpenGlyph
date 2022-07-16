@@ -41,6 +41,12 @@ std::unique_ptr<khepri::io::Stream> AssetLoader::open_shader(std::string_view na
     return open_file(BASE_PATH / "Art" / "Shaders", name, extensions);
 }
 
+std::unique_ptr<khepri::io::Stream> AssetLoader::open_map(std::string_view name)
+{
+    const std::array<std::string_view, 1> extensions{"TED"};
+    return open_file(BASE_PATH / "Art" / "Maps", name, extensions);
+}
+
 std::unique_ptr<khepri::io::Stream>
 AssetLoader::open_file(const fs::path& base_path, std::string_view name_,
                        gsl::span<const std::string_view> extensions)
