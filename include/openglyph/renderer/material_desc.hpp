@@ -15,6 +15,8 @@ struct MaterialDesc
     using PropertyValue = std::variant<std::int32_t, float, khepri::Vector2, khepri::Vector3,
                                        khepri::Vector4, khepri::Matrix, std::string>;
 
+    using AlphaBlendMode = khepri::renderer::MaterialDesc::AlphaBlendMode;
+
     /// Description of a material shader property
     struct Property
     {
@@ -28,8 +30,8 @@ struct MaterialDesc
     /// Name of the material
     std::string name;
 
-    /// Enable alpha blending when rendering this material
-    bool alpha_blend{false};
+    /// Type of alpha blending to use when rendering with this material
+    AlphaBlendMode alpha_blend_mode{AlphaBlendMode::none};
 
     /// Enable depth-buffer test when rendering this material
     bool depth_enable{true};

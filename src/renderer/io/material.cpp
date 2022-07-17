@@ -1,8 +1,7 @@
+#include <khepri/log/log.hpp>
 #include <openglyph/parser/parsers.hpp>
 #include <openglyph/parser/xml_parser.hpp>
 #include <openglyph/renderer/io/material.hpp>
-
-#include <khepri/log/log.hpp>
 
 namespace openglyph {
 namespace {
@@ -48,15 +47,35 @@ struct Parser<PropertyType>
     }
 };
 
+template <>
+struct Parser<renderer::MaterialDesc::AlphaBlendMode>
+{
+    using AlphaBlendMode = renderer::MaterialDesc::AlphaBlendMode;
+
+    static std::optional<AlphaBlendMode> parse(std::string_view str) noexcept
+    {
+        if (str == "none") {
+            return AlphaBlendMode::none;
+        }
+        if (str == "blend_src") {
+            return AlphaBlendMode::blend_src;
+        }
+        if (str == "additive") {
+            return AlphaBlendMode::additive;
+        }
+        return {};
+    }
+};
+
 namespace renderer::io {
 
 namespace {
 auto load_material(const openglyph::XmlParser::Node& node)
 {
     struct MaterialDesc material_desc;
-    material_desc.name = require_attribute(node, "Name");
-    material_desc.alpha_blend =
-        openglyph::parse<bool>(optional_attribute(node, "AlphaBlend", "false"));
+    material_desc.name             = require_attribute(node, "Name");
+    material_desc.alpha_blend_mode = openglyph::parse<MaterialDesc::AlphaBlendMode>(
+        optional_attribute(node, "AlphaBlend", "none"));
     material_desc.depth_enable =
         openglyph::parse<bool>(optional_attribute(node, "DepthEnable", "true"));
 

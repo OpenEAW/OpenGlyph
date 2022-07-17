@@ -17,10 +17,10 @@ void MaterialStore::register_materials(
 {
     for (const auto& desc : material_descs) {
         khepri::renderer::MaterialDesc info;
-        info.cull_mode    = khepri::renderer::MaterialDesc::CullMode::front;
-        info.alpha_blend  = desc.alpha_blend;
-        info.depth_enable = desc.depth_enable;
-        info.shader       = m_shader_loader(desc.shader);
+        info.cull_mode        = khepri::renderer::MaterialDesc::CullMode::front;
+        info.alpha_blend_mode = desc.alpha_blend_mode;
+        info.depth_enable     = desc.depth_enable;
+        info.shader           = m_shader_loader(desc.shader);
         for (const auto& property : desc.properties) {
             khepri::renderer::MaterialDesc::Property prop;
             prop.name = property.name;
