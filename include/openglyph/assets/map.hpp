@@ -1,5 +1,7 @@
 #pragma once
 
+#include <openglyph/game/environment.hpp>
+
 namespace openglyph {
 
 struct Map
@@ -8,20 +10,6 @@ struct Map
     {
         // Map format version
         std::uint32_t version{0};
-    };
-
-    struct Skydome
-    {
-        std::string name;
-        float       scale;
-        float       tilt;
-        float       z_angle;
-    };
-
-    struct Environment
-    {
-        std::string            name;
-        std::array<Skydome, 2> skydomes;
     };
 
     Header header;

@@ -60,8 +60,8 @@ Map::Header read_map_header(gsl::span<const std::uint8_t> data)
 
 auto read_map_environment(gsl::span<const std::uint8_t> data)
 {
-    Map::Environment environment;
-    MinichunkReader  reader(data);
+    Environment     environment;
+    MinichunkReader reader(data);
     for (; reader.has_chunk(); reader.next()) {
         switch (reader.id()) {
         case 20:
@@ -112,7 +112,7 @@ auto read_active_environment(gsl::span<const std::uint8_t> data)
 
 auto read_map_environments(ChunkReader& reader)
 {
-    std::vector<Map::Environment> environments;
+    std::vector<Environment> environments;
     for (; reader.has_chunk(); reader.next()) {
         switch (reader.id()) {
         case ChunkId::map_data_environment:

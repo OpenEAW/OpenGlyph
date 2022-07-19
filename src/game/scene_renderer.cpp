@@ -28,7 +28,7 @@ public:
 };
 } // namespace
 
-void SceneRenderer::render_scene(const khepri::scene::Scene&     scene,
+void SceneRenderer::render_scene(const openglyph::Scene&         scene,
                                  const khepri::renderer::Camera& camera)
 {
     std::vector<khepri::renderer::MeshInstance> meshes;

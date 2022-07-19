@@ -14,6 +14,7 @@ add_library(${PROJECT_NAME}
     src/assets/io/map.cpp
     src/game/game_object_type_store.cpp
     src/game/scene_renderer.cpp
+    src/game/scene.cpp
     src/io/chunk_reader.cpp
     src/renderer/io/material.cpp
     src/renderer/io/model.cpp
