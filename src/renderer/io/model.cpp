@@ -69,14 +69,14 @@ struct SerializeTraits<openglyph::io::VertexV1>
     static openglyph::io::VertexV1 deserialize(Deserializer& d)
     {
         openglyph::io::VertexV1 v;
-        v.position = d.read<khepri::Vector3>();
-        v.normal   = d.read<khepri::Vector3>();
+        v.position = d.read<khepri::Vector3f>();
+        v.normal   = d.read<khepri::Vector3f>();
         for (int i = 0; i < 4; ++i) {
-            v.uv[i] = d.read<khepri::Vector2>();
+            v.uv[i] = d.read<khepri::Vector2f>();
         }
-        v.tangent  = d.read<khepri::Vector3>();
-        v.binormal = d.read<khepri::Vector3>();
-        v.color    = d.read<khepri::Vector4>();
+        v.tangent  = d.read<khepri::Vector3f>();
+        v.binormal = d.read<khepri::Vector3f>();
+        v.color    = d.read<khepri::ColorRGBA>();
         for (int i = 0; i < 4; ++i) {
             d.read<std::uint32_t>();
         }
@@ -102,7 +102,7 @@ struct SerializeTraits<openglyph::io::VertexV2>
         s.write(value.tangent);
         s.write(value.binormal);
         s.write(value.color);
-        s.write(khepri::Vector4{0, 0, 0, 0});
+        s.write(khepri::Vector4f{0, 0, 0, 0});
         for (int i = 0; i < 4; ++i) {
             s.write(std::uint32_t{0});
         }
@@ -115,15 +115,15 @@ struct SerializeTraits<openglyph::io::VertexV2>
     static openglyph::io::VertexV2 deserialize(Deserializer& d)
     {
         openglyph::io::VertexV2 v;
-        v.position = d.read<khepri::Vector3>();
-        v.normal   = d.read<khepri::Vector3>();
+        v.position = d.read<khepri::Vector3f>();
+        v.normal   = d.read<khepri::Vector3f>();
         for (int i = 0; i < 4; ++i) {
-            v.uv[i] = d.read<khepri::Vector2>();
+            v.uv[i] = d.read<khepri::Vector2f>();
         }
-        v.tangent  = d.read<khepri::Vector3>();
-        v.binormal = d.read<khepri::Vector3>();
-        v.color    = d.read<khepri::Vector4>();
-        d.read<khepri::Vector4>();
+        v.tangent  = d.read<khepri::Vector3f>();
+        v.binormal = d.read<khepri::Vector3f>();
+        v.color    = d.read<khepri::ColorRGBA>();
+        d.read<khepri::Vector4f>();
         for (int i = 0; i < 4; ++i) {
             d.read<std::uint32_t>();
         }
@@ -278,11 +278,11 @@ auto read_shader_info(ChunkReader& reader)
             break;
         case ChunkId::shader_param_float3:
             verify(reader.has_data());
-            params.push_back(read_material_param<khepri::Vector3>(reader.read_data()));
+            params.push_back(read_material_param<khepri::Vector3f>(reader.read_data()));
             break;
         case ChunkId::shader_param_float4:
             verify(reader.has_data());
-            params.push_back(read_material_param<khepri::Vector4>(reader.read_data()));
+            params.push_back(read_material_param<khepri::Vector4f>(reader.read_data()));
             break;
         case ChunkId::shader_param_texture:
             verify(reader.has_data());
@@ -312,8 +312,8 @@ Model::Mesh read_mesh(ChunkReader& reader)
             const auto               data = reader.read_data();
             khepri::io::Deserializer d(data);
             mesh.materials.resize(d.read<std::uint32_t>());
-            d.read<khepri::Vector3>();
-            d.read<khepri::Vector3>();
+            d.read<khepri::Vector3f>();
+            d.read<khepri::Vector3f>();
             d.read<std::uint32_t>();
             mesh.visible = (d.read<std::uint32_t>() == 0);
             break;

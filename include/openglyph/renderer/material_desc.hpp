@@ -12,8 +12,8 @@ namespace openglyph::renderer {
 struct MaterialDesc
 {
     /// Value of a material shader property
-    using PropertyValue = std::variant<std::int32_t, float, khepri::Vector2, khepri::Vector3,
-                                       khepri::Vector4, khepri::Matrix, std::string>;
+    using PropertyValue = std::variant<std::int32_t, float, khepri::Vector2f, khepri::Vector3f,
+                                       khepri::Vector4f, khepri::Matrixf, std::string>;
 
     using AlphaBlendMode = khepri::renderer::MaterialDesc::AlphaBlendMode;
 

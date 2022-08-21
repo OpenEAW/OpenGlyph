@@ -1,6 +1,5 @@
-#include <openglyph/renderer/model_creator.hpp>
-
 #include <khepri/utility/string.hpp>
+#include <openglyph/renderer/model_creator.hpp>
 
 namespace openglyph::renderer {
 
@@ -23,7 +22,7 @@ std::unique_ptr<RenderModel> ModelCreator::create_model(const Model& model)
             mesh_desc.vertices.reserve(material.vertices.size());
             for (const auto& v : material.vertices) {
                 mesh_desc.vertices.push_back(
-                    {v.position, v.normal, v.tangent, v.binormal, v.uv[0]});
+                    {v.position, v.normal, v.tangent, v.binormal, v.uv[0], v.color});
             }
             mesh_desc.indices = material.indices;
             auto render_mesh  = m_renderer.create_mesh(mesh_desc);
@@ -35,9 +34,9 @@ std::unique_ptr<RenderModel> ModelCreator::create_model(const Model& model)
                     params.push_back({param.name, *val});
                 } else if (auto val = std::get_if<float>(&param.value)) {
                     params.push_back({param.name, *val});
-                } else if (auto val = std::get_if<khepri::Vector3>(&param.value)) {
+                } else if (auto val = std::get_if<khepri::Vector3f>(&param.value)) {
                     params.push_back({param.name, *val});
-                } else if (auto val = std::get_if<khepri::Vector4>(&param.value)) {
+                } else if (auto val = std::get_if<khepri::Vector4f>(&param.value)) {
                     params.push_back({param.name, *val});
                 } else if (auto val = std::get_if<std::string>(&param.value)) {
                     if (auto* texture = m_texture_loader(khepri::basename(*val))) {

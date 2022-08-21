@@ -2,6 +2,7 @@
 
 #include "material_desc.hpp"
 
+#include <khepri/math/color_rgba.hpp>
 #include <khepri/math/vector3.hpp>
 #include <khepri/math/vector4.hpp>
 
@@ -29,12 +30,12 @@ public:
      */
     struct Vertex
     {
-        khepri::Vector3 position; ///< Position (in object space)
-        khepri::Vector3 normal;   ///< Normal vector (in tangent space)
-        khepri::Vector2 uv[4];    ///< Texture coordinates (in tangent space)
-        khepri::Vector3 tangent;  ///< Tangent vector (in tangent space)
-        khepri::Vector3 binormal; ///< Binormal vector (in tangent space)
-        khepri::Vector4 color;    ///< Color (in linear color space)
+        khepri::Vector3f  position; ///< Position (in object space)
+        khepri::Vector3f  normal;   ///< Normal vector (in tangent space)
+        khepri::Vector2f  uv[4];    ///< Texture coordinates (in tangent space)
+        khepri::Vector3f  tangent;  ///< Tangent vector (in tangent space)
+        khepri::Vector3f  binormal; ///< Binormal vector (in tangent space)
+        khepri::ColorRGBA color;    ///< Color (in linear color space)
     };
 
     /**
@@ -45,7 +46,7 @@ public:
     {
         /// Value for a material parameter
         using ParamValue =
-            std::variant<std::int32_t, float, khepri::Vector3, khepri::Vector4, std::string>;
+            std::variant<std::int32_t, float, khepri::Vector3f, khepri::Vector4f, std::string>;
 
         /// A material parameter
         struct Param

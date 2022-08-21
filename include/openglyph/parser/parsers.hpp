@@ -103,30 +103,28 @@ struct Parser<std::string>
     }
 };
 
-template <>
-struct Parser<khepri::Vector2>
+template <typename T>
+struct Parser<khepri::BasicVector2<T>>
 {
-    static std::optional<khepri::Vector2> parse(std::string_view str) noexcept
+    static std::optional<khepri::BasicVector2<T>> parse(std::string_view str) noexcept
     {
-        using ComponentType = khepri::Vector2::ComponentType;
         if (auto res = split<2>(str, ",")) {
-            return khepri::Vector2{openglyph::parse<ComponentType>(res->parts[0]),
-                                   openglyph::parse<ComponentType>(res->parts[1])};
+            return khepri::BasicVector2<T>{openglyph::parse<T>(res->parts[0]),
+                                           openglyph::parse<T>(res->parts[1])};
         }
         return {};
     }
 };
 
-template <>
-struct Parser<khepri::Vector3>
+template <typename T>
+struct Parser<khepri::BasicVector3<T>>
 {
-    static std::optional<khepri::Vector3> parse(std::string_view str) noexcept
+    static std::optional<khepri::BasicVector3<T>> parse(std::string_view str) noexcept
     {
-        using ComponentType = khepri::Vector3::ComponentType;
         if (auto res = split<3>(str, ",")) {
-            return khepri::Vector3{openglyph::parse<ComponentType>(res->parts[0]),
-                                   openglyph::parse<ComponentType>(res->parts[1]),
-                                   openglyph::parse<ComponentType>(res->parts[2])};
+            return khepri::BasicVector3<T>{openglyph::parse<T>(res->parts[0]),
+                                           openglyph::parse<T>(res->parts[1]),
+                                           openglyph::parse<T>(res->parts[2])};
         }
         return {};
     }
@@ -147,45 +145,35 @@ struct Parser<khepri::ColorSRGB>
     }
 };
 
-template <>
-struct Parser<khepri::Vector4>
+template <typename T>
+struct Parser<khepri::BasicVector4<T>>
 {
-    static std::optional<khepri::Vector4> parse(std::string_view str) noexcept
+    static std::optional<khepri::BasicVector4<T>> parse(std::string_view str) noexcept
     {
-        using ComponentType = khepri::Vector4::ComponentType;
         if (auto res = split<4>(str, ",")) {
-            return khepri::Vector4{openglyph::parse<ComponentType>(res->parts[0]),
-                                   openglyph::parse<ComponentType>(res->parts[1]),
-                                   openglyph::parse<ComponentType>(res->parts[2]),
-                                   openglyph::parse<ComponentType>(res->parts[3])};
+            return khepri::BasicVector4{
+                openglyph::parse<T>(res->parts[0]), openglyph::parse<T>(res->parts[1]),
+                openglyph::parse<T>(res->parts[2]), openglyph::parse<T>(res->parts[3])};
         }
         return {};
     }
 };
 
-template <>
-struct Parser<khepri::Matrix>
+template <typename T>
+struct Parser<khepri::BasicMatrix<T>>
 {
-    static std::optional<khepri::Matrix> parse(std::string_view str) noexcept
+    static std::optional<khepri::BasicMatrix<T>> parse(std::string_view str) noexcept
     {
-        using ComponentType = khepri::Matrix::ComponentType;
         if (auto res = split<16>(str, ",")) {
-            return khepri::Matrix{openglyph::parse<ComponentType>(res->parts[0]),
-                                  openglyph::parse<ComponentType>(res->parts[1]),
-                                  openglyph::parse<ComponentType>(res->parts[2]),
-                                  openglyph::parse<ComponentType>(res->parts[3]),
-                                  openglyph::parse<ComponentType>(res->parts[4]),
-                                  openglyph::parse<ComponentType>(res->parts[5]),
-                                  openglyph::parse<ComponentType>(res->parts[6]),
-                                  openglyph::parse<ComponentType>(res->parts[7]),
-                                  openglyph::parse<ComponentType>(res->parts[8]),
-                                  openglyph::parse<ComponentType>(res->parts[9]),
-                                  openglyph::parse<ComponentType>(res->parts[10]),
-                                  openglyph::parse<ComponentType>(res->parts[11]),
-                                  openglyph::parse<ComponentType>(res->parts[12]),
-                                  openglyph::parse<ComponentType>(res->parts[13]),
-                                  openglyph::parse<ComponentType>(res->parts[14]),
-                                  openglyph::parse<ComponentType>(res->parts[15])};
+            return khepri::BasicMatrix<T>{
+                openglyph::parse<T>(res->parts[0]),  openglyph::parse<T>(res->parts[1]),
+                openglyph::parse<T>(res->parts[2]),  openglyph::parse<T>(res->parts[3]),
+                openglyph::parse<T>(res->parts[4]),  openglyph::parse<T>(res->parts[5]),
+                openglyph::parse<T>(res->parts[6]),  openglyph::parse<T>(res->parts[7]),
+                openglyph::parse<T>(res->parts[8]),  openglyph::parse<T>(res->parts[9]),
+                openglyph::parse<T>(res->parts[10]), openglyph::parse<T>(res->parts[11]),
+                openglyph::parse<T>(res->parts[12]), openglyph::parse<T>(res->parts[13]),
+                openglyph::parse<T>(res->parts[14]), openglyph::parse<T>(res->parts[15])};
         }
         return {};
     }

@@ -94,16 +94,16 @@ auto load_material(const openglyph::XmlParser::Node& node)
                 property.default_value = openglyph::parse<float>(propnode.value());
                 break;
             case PropertyType::vector2:
-                property.default_value = openglyph::parse<khepri::Vector2>(propnode.value());
+                property.default_value = openglyph::parse<khepri::Vector2f>(propnode.value());
                 break;
             case PropertyType::vector3:
-                property.default_value = openglyph::parse<khepri::Vector3>(propnode.value());
+                property.default_value = openglyph::parse<khepri::Vector3f>(propnode.value());
                 break;
             case PropertyType::vector4:
-                property.default_value = openglyph::parse<khepri::Vector4>(propnode.value());
+                property.default_value = openglyph::parse<khepri::Vector4f>(propnode.value());
                 break;
             case PropertyType::matrix:
-                property.default_value = openglyph::parse<khepri::Matrix>(propnode.value());
+                property.default_value = openglyph::parse<khepri::Matrixf>(propnode.value());
                 break;
             case PropertyType::texture:
                 property.default_value = std::string(propnode.value());
