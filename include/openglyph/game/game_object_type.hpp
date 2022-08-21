@@ -19,6 +19,9 @@ struct GameObjectType final
 
     /// The name of the render model to use in space mode
     std::string_view space_model_name;
+
+    /// The factor by which the model be scaled
+    double scale_factor;
 };
 
 } // namespace openglyph

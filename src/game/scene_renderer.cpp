@@ -14,7 +14,8 @@ public:
         std::vector<Param> material_params;
     };
 
-    explicit RenderState(const renderer::RenderModel& model) : meshes(model.meshes().size())
+    explicit RenderState(const renderer::RenderModel& model, const khepri::Matrixf& transform)
+        : meshes(model.meshes().size()), transform(transform)
     {
         const auto& model_meshes = model.meshes();
         for (std::size_t i = 0; i < model_meshes.size(); ++i) {
@@ -25,6 +26,7 @@ public:
     }
 
     std::vector<Mesh> meshes;
+    khepri::Matrixf   transform;
 };
 } // namespace
 
@@ -37,7 +39,8 @@ void SceneRenderer::render_scene(const openglyph::Scene&         scene,
         if (const auto* render = object->behavior<RenderBehavior>()) {
             auto* state = object->user_data<RenderState>();
             if (!state) {
-                object->user_data(RenderState{render->model()});
+                object->user_data(
+                    RenderState{render->model(), khepri::Matrixf::create_scaling(render->scale())});
                 state = object->user_data<RenderState>();
             }
 
@@ -47,8 +50,9 @@ void SceneRenderer::render_scene(const openglyph::Scene&         scene,
             assert(model_meshes.size() == state->meshes.size());
             for (std::size_t i = 0; i < state->meshes.size(); ++i) {
                 if (model_meshes[i].visible) {
-                    meshes.push_back({model_meshes[i].render_mesh.get(), transform,
-                                      model_meshes[i].material, state->meshes[i].material_params});
+                    meshes.push_back({model_meshes[i].render_mesh.get(),
+                                      transform * state->transform, model_meshes[i].material,
+                                      state->meshes[i].material_params});
                 }
             }
         }

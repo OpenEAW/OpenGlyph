@@ -11,7 +11,8 @@ Scene::Scene(AssetCache& asset_cache, const GameObjectTypeStore& game_object_typ
     const auto& create_game_object = [&](const openglyph::GameObjectType& type) {
         auto object = std::make_shared<khepri::scene::SceneObject>();
         if (const auto* render_model = asset_cache.get_render_model(type.space_model_name)) {
-            object->create_behavior<openglyph::RenderBehavior>(*render_model);
+            auto& behavior = object->create_behavior<openglyph::RenderBehavior>(*render_model);
+            behavior.scale(type.scale_factor);
         }
         return object;
     };

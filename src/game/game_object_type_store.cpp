@@ -1,16 +1,17 @@
 #include <openglyph/game/game_object_type_store.hpp>
+#include <openglyph/parser/parsers.hpp>
 
 #include <algorithm>
 
 namespace openglyph {
 namespace {
 
-std::string_view optional_child(const XmlParser::Node& node, std::string_view child_name,
-                                std::string_view default_value)
+template <typename T>
+T optional_child(const XmlParser::Node& node, std::string_view child_name, const T& default_value)
 {
     if (auto child = node.child(child_name)) {
         if (auto value = child->value(); !value.empty()) {
-            return value;
+            return parse<T>(value);
         }
     }
     return default_value;
@@ -19,13 +20,16 @@ std::string_view optional_child(const XmlParser::Node& node, std::string_view ch
 
 GameObjectType* GameObjectTypeStore::read_game_object_type(const XmlParser::Node& node)
 {
+    using namespace std::literals;
+
     // Because the memory resource is a monotonic_buffer_resource, tracking the lifetime of the
     // allocated object is not necessary.
     std::pmr::polymorphic_allocator<GameObjectType> allocator(&m_memory_resource);
     auto type = new (allocator.allocate(1)) GameObjectType();
 
     type->name             = copy_string(require_attribute(node, "Name"));
-    type->space_model_name = copy_string(optional_child(node, "Space_Model_Name", ""));
+    type->space_model_name = copy_string(optional_child(node, "Space_Model_Name", ""sv));
+    type->scale_factor     = optional_child(node, "Scale_Factor", 1.0);
     return type;
 }
 

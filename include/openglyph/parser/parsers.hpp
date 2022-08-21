@@ -50,7 +50,7 @@ struct Parser
 template <typename T>
 T parse(std::string_view str)
 {
-    std::optional<T> val = Parser<T>::parse(str);
+    std::optional<T> val = Parser<T>::parse(khepri::trim(str));
     if (!val) {
         throw ParseError("\"" + std::string(str) + "\" is not a valid value");
     }
@@ -69,6 +69,13 @@ struct Parser<T, typename std::enable_if_t<std::is_integral_v<T> || std::is_floa
         T result;
 
         const auto* end = str.data() + str.size();
+        if constexpr (std::is_floating_point_v<T>) {
+            // Remove any trailing 'f' suffix
+            if (!str.empty() && (str.back() == 'f' || str.back() == 'F')) {
+                --end;
+            }
+        }
+
         if (auto [ptr, ec] = std::from_chars(str.data(), end, result);
             ptr == end && ec == std::errc()) {
             return result;
@@ -99,7 +106,16 @@ struct Parser<std::string>
 {
     static std::optional<std::string> parse(std::string_view str) noexcept
     {
-        return std::string(khepri::trim(str));
+        return std::string(str);
+    }
+};
+
+template <>
+struct Parser<std::string_view>
+{
+    static std::optional<std::string_view> parse(std::string_view str) noexcept
+    {
+        return str;
     }
 };
 

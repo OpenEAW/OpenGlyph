@@ -1,8 +1,7 @@
 #pragma once
 
-#include <openglyph/renderer/render_model.hpp>
-
 #include <khepri/scene/behavior.hpp>
+#include <openglyph/renderer/render_model.hpp>
 
 namespace openglyph {
 
@@ -21,8 +20,19 @@ public:
         return m_model;
     }
 
+    [[nodiscard]] double scale() const noexcept
+    {
+        return m_scale;
+    }
+
+    void scale(double scale) noexcept
+    {
+        m_scale = scale;
+    }
+
 private:
     const renderer::RenderModel& m_model;
+    double                       m_scale{1.0};
 };
 
 } // namespace openglyph
