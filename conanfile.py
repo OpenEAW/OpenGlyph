@@ -1,5 +1,6 @@
-from conans import ConanFile, CMake, tools
-from conan.tools.cmake import cmake_layout, CMakeToolchain
+from conan import ConanFile, tools
+from conan.tools.cmake import CMake, cmake_layout, CMakeToolchain
+from conan.tools.scm import Git
 import re
 
 class OpenGlyphConan(ConanFile):
@@ -10,7 +11,7 @@ class OpenGlyphConan(ConanFile):
     description = "An open-source game engine compatible with Petroglyph's GlyphX assets"
 
     def set_version(self):
-        git = tools.Git(folder=self.recipe_folder)
+        git = Git(self)
 
         self.version = "0.0.0"
         try:
@@ -24,7 +25,7 @@ class OpenGlyphConan(ConanFile):
 
         try:
             # Store the short Git version because Conan has a limit of the length of the version string
-            self.version += "+{}".format(git.get_revision()[:GIT_SHORT_HASH_LENGH])
+            self.version += "+{}".format(git.get_commit()[:GIT_SHORT_HASH_LENGH])
             if not git.is_pristine():
                 self.version += ".dirty"
         except Exception:
@@ -36,10 +37,11 @@ class OpenGlyphConan(ConanFile):
 
     generators = "CMakeDeps"
 
-    requires = [
-        ("khepri/[<1.0]"),
-        ("rapidxml/1.13"),
-    ]
+    def requirements(self):
+        # Public dependencies
+        self.requires("khepri/[<1.0]", transitive_headers=True)
+        self.requires("rapidxml/1.13", transitive_headers=True)
+        # Private dependencies
 
     exports_sources = "CMakeLists.txt", "include/*", "src/*"
 
