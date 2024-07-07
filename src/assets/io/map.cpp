@@ -80,16 +80,16 @@ auto read_map_environment(gsl::span<const std::uint8_t> data)
             environment.skydomes[1].scale = as_float(reader.read_data());
             break;
         case 29:
-            environment.skydomes[0].tilt = as_float(reader.read_data());
+            environment.skydomes[0].tilt = khepri::to_radians(as_float(reader.read_data()));
             break;
         case 30:
-            environment.skydomes[1].tilt = as_float(reader.read_data());
+            environment.skydomes[1].tilt = khepri::to_radians(as_float(reader.read_data()));
             break;
         case 31:
-            environment.skydomes[0].z_angle = as_float(reader.read_data());
+            environment.skydomes[0].z_angle = khepri::to_radians(as_float(reader.read_data()));
             break;
         case 32:
-            environment.skydomes[1].z_angle = as_float(reader.read_data());
+            environment.skydomes[1].z_angle = khepri::to_radians(as_float(reader.read_data()));
             break;
         }
     }

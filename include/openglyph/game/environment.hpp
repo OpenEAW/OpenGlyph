@@ -10,10 +10,17 @@ namespace openglyph {
  */
 struct Skydome
 {
+    /// Name of the skydome's game object
     std::string name;
-    float       scale;
-    float       tilt;
-    float       z_angle;
+
+    /// Scale to instantiate the skydome with
+    double scale{1.0};
+
+    // Rotation around the X-axis (in radians) to instantiate the skydome with
+    double tilt{0};
+
+    // Rotation around the Z-axis (in radians) to instantiate the skydome with
+    double z_angle{0};
 };
 
 /**
