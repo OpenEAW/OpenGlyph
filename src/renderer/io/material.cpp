@@ -67,6 +67,41 @@ struct Parser<renderer::MaterialDesc::AlphaBlendMode>
     }
 };
 
+template <>
+struct Parser<renderer::MaterialDesc::ComparisonFunc>
+{
+    using ComparisonFunc = renderer::MaterialDesc::ComparisonFunc;
+
+    static std::optional<ComparisonFunc> parse(std::string_view str) noexcept
+    {
+        if (str == "never") {
+            return ComparisonFunc::never;
+        }
+        if (str == "less") {
+            return ComparisonFunc::less;
+        }
+        if (str == "equal") {
+            return ComparisonFunc::equal;
+        }
+        if (str == "less_equal") {
+            return ComparisonFunc::less_equal;
+        }
+        if (str == "greater") {
+            return ComparisonFunc::greater;
+        }
+        if (str == "not_equal") {
+            return ComparisonFunc::not_equal;
+        }
+        if (str == "greater_equal") {
+            return ComparisonFunc::greater_equal;
+        }
+        if (str == "always") {
+            return ComparisonFunc::always;
+        }
+        return {};
+    }
+};
+
 namespace renderer::io {
 
 namespace {
@@ -76,8 +111,15 @@ auto load_material(const openglyph::XmlParser::Node& node)
     material_desc.name             = require_attribute(node, "Name");
     material_desc.alpha_blend_mode = openglyph::parse<MaterialDesc::AlphaBlendMode>(
         optional_attribute(node, "AlphaBlend", "none"));
-    material_desc.depth_enable =
-        openglyph::parse<bool>(optional_attribute(node, "DepthEnable", "true"));
+
+    if (openglyph::parse<bool>(optional_attribute(node, "DepthEnable", "true"))) {
+        MaterialDesc::DepthBufferDesc desc{};
+        desc.comparison_func = openglyph::parse<MaterialDesc::ComparisonFunc>(
+            optional_attribute(node, "DepthFunc", "less"));
+        desc.write_enable =
+            openglyph::parse<bool>(optional_attribute(node, "DepthWriteEnable", "true"));
+        material_desc.depth_buffer = desc;
+    }
 
     for (const auto& propnode : node.nodes()) {
         if (propnode.name() == "Shader") {
