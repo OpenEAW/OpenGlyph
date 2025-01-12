@@ -11,7 +11,7 @@ class OpenGlyphConan(ConanFile):
     description = "An open-source game engine compatible with Petroglyph's GlyphX assets"
 
     def set_version(self):
-        git = Git(self)
+        git = Git(self, self.recipe_folder)
 
         self.version = "0.0.0"
         try:
@@ -39,7 +39,7 @@ class OpenGlyphConan(ConanFile):
 
     def requirements(self):
         # Public dependencies
-        self.requires("khepri/[<1.0]", transitive_headers=True)
+        self.requires("khepri/[>=0.0 <1.0]", transitive_headers=True)
         self.requires("rapidxml/1.13", transitive_headers=True)
         # Private dependencies
 
